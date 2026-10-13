@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cookie Lab | G3 Shop</title>
+<meta name="description" content="G3 Shop - demo ecommerce store for testing cookie consent management.">
+<!-- OWNERSHIP VERIFICATION (method 1: HTML meta tag) -->
+<meta name="privacyops-site-verification" content="pops-Ewq2haA3o4-ianZeFaJIA7dxcEqm1wP_">
+<link rel="canonical" href="https://g3cyberspace.com/cookie-test.html">
+<link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<!-- ===== PASTE YOUR CONSENT MANAGEMENT (CMP) SCRIPT HERE, as the FIRST script ===== -->
+<!-- <script src="https://YOUR-CMP-URL/banner.js" data-site-id="..."></script> -->
+<!-- ===== END CMP SCRIPT ===== -->
+</head>
+<body data-page="lab">
+<div class="topbar">Free shipping on orders over $75 &bull; Demo store, no real purchases</div>
+<header class="site"><div class="wrap bar">
+<a class="brand" href="index.html"><i>G3</i> Shop</a>
+<button class="burger" aria-label="Menu" onclick="document.body.classList.toggle('open')">&#9776;</button>
+<nav class="nav"><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="cookie-test.html" class="on">Cookie Lab</a></nav>
+<form class="search" id="hs"><input id="hq" placeholder="Search products..." aria-label="Search"></form>
+<a class="cartlink" href="cart.html">Cart<span class="badge">0</span></a>
+</div></header>
+<main>
+<div class="wrap page"><h1>Cookie Lab</h1><p class="mu">Set dummy cookies, load trackers and verify your consent banner blocks or allows them.</p>
+<div class="box"><h3 style="margin-top:0">1. Live state</h3><button class="btn sm" id="rf">Refresh</button> <button class="btn sm out" id="cl">Clear all cookies &amp; storage</button>
+<div class="g2 mt"><div><b>document.cookie</b><pre id="oc"></pre></div><div><b>localStorage / sessionStorage</b><pre id="os"></pre></div></div><b>dataLayer (shop events)</b><pre id="od"></pre></div>
+<div class="box mt"><h3 style="margin-top:0">2. Set cookies by category</h3><button class="btn sm" data-set="necessary">Necessary</button> <button class="btn sm" data-set="preferences">Preferences</button> <button class="btn sm" data-set="analytics">Analytics</button> <button class="btn sm" data-set="marketing">Marketing</button></div>
+<div class="box mt"><h3 style="margin-top:0">3. Consent-gated scripts</h3><p class="mu">Tags use <code>type="text/plain"</code> and <code>data-consent-category</code>; a CMP should switch them on after consent.</p>
+<table><thead><tr><th>Tracker</th><th>Category</th><th>Status</th></tr></thead><tbody><tr><td>Dummy Analytics</td><td>analytics</td><td id="st-analytics">blocked</td></tr><tr><td>Dummy Pixel</td><td>marketing</td><td id="st-marketing">blocked</td></tr></tbody></table></div>
+<div class="box mt"><h3 style="margin-top:0">4. Third-party embed</h3><button class="btn sm" id="yt">Load YouTube</button><iframe id="ytf" class="embed" title="YouTube" data-consent-category="marketing" src="about:blank"></iframe></div>
+<div class="box mt"><h3 style="margin-top:0">5. Checklist</h3><ul><li>Banner shows before any non-essential cookie is set</li><li>Reject all keeps only necessary storage (cart still works)</li><li>Accept all enables analytics and marketing</li><li>Granular toggles work; choice persists across pages</li><li>Footer Cookie Settings reopens the preference centre</li><li>Withdrawing consent removes cookies</li><li>Ownership verified: meta, well-known, DNS TXT</li></ul></div></div>
+</main>
+<footer class="site"><div class="wrap">
+<div class="fg">
+<div><h4>G3 Shop</h4><p>A fictional store built for testing cookie consent banners, preference centres and tracker blocking.</p></div>
+<div><h4>Shop</h4><a href="shop.html?cat=Electronics">Electronics</a><a href="shop.html?cat=Fashion">Fashion</a><a href="shop.html?cat=Home">Home</a><a href="shop.html?cat=Sports">Sports</a></div>
+<div><h4>Help</h4><a href="about.html">About</a><a href="contact.html">Contact</a><a href="cart.html">Cart</a><a href="cookie-test.html">Cookie Lab</a></div>
+<div><h4>Legal</h4><a href="privacy.html">Privacy Policy</a><a href="cookie-policy.html">Cookie Policy</a><a href="#" class="opencs">Cookie Settings</a></div>
+</div><div class="cp">&copy; 2026 G3 Shop (test site). All products are fictional.</div></div></footer>
+<div id="toast"></div>
+<script src="js/app.js"></script>
+<script type="text/plain" data-consent-category="analytics">document.cookie="_ga_demo=GA1.2.123456789; max-age=63072000; path=/; SameSite=Lax";document.cookie="_gid_demo=GA1.2.987654; max-age=86400; path=/";var e=document.getElementById("st-analytics");if(e){e.textContent="RUNNING";e.className="ok"}</script>
+<script type="text/plain" data-consent-category="marketing">document.cookie="_fbp_demo=fb.1.1700000000.111; max-age=7776000; path=/";document.cookie="g3_ads_demo=ad-"+Math.random().toString(36).slice(2,9)+"; max-age=2592000; path=/";var e=document.getElementById("st-marketing");if(e){e.textContent="RUNNING";e.className="ok"}</script>
+<script src="js/cookie-test.js"></script>
+</body>
+</html>

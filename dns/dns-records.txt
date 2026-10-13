@@ -1,0 +1,7 @@
+# OWNERSHIP VERIFICATION (method 3: DNS TXT) - add at your DNS provider
+Type : TXT
+Name : _privacyops-challenge   (full: _privacyops-challenge.g3cyberspace.com)
+Value: privacyops-site-verification=pops-Ewq2haA3o4-ianZeFaJIA7dxcEqm1wP_
+TTL  : 300
+
+# Verify:  dig TXT _privacyops-challenge.g3cyberspace.com +short
