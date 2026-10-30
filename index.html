@@ -26,7 +26,8 @@ gtag('set','url_passthrough',true);
 
  <!-- Meta Pixel Code -->
     <!-- Meta Pixel Code -->
-<script type="text/plain" data-pops-purpose="marketing"></script>
+<!-- Meta Pixel Code Gated by Rkshan -->
+<script type="text/plain" data-pops-purpose="marketing">
     ! function(f, b, e, v, n, t, s) {
         if (f.fbq) return;
         n = f.fbq = function() {
@@ -45,11 +46,10 @@ gtag('set','url_passthrough',true);
         s.parentNode.insertBefore(t, s)
     }(window, document, 'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-    // 🔴 ADD THIS: Keep Meta silent until Rkshan banner grants consent
-    fbq('consent', 'revoke');
     fbq('init', '853798743227171');
     fbq('track', 'PageView');
 </script>
+<!-- End Meta Pixel Code -->
   
     <!-- End Meta Pixel Code -->
 
