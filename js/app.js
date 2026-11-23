@@ -12,6 +12,35 @@ function badge(){var n=cart().reduce(function(a,i){return a+i.q},0);$$(".badge")
 function toast(m){var t=$("#toast");t.textContent=m;t.className="on";clearTimeout(t._t);t._t=setTimeout(function(){t.className=""},1800)}
 /* Analytics hook: pushes to dataLayer. Your CMP / GTM decides whether it is allowed. */
 function track(ev,data){window.dataLayer=window.dataLayer||[];var o={event:ev};for(var k in data)o[k]=data[k];window.dataLayer.push(o)}
+
+/* Method B: Rkshan Event-Driven Consent Automation */
+function sendRkshanConsentRequest(eventType, recipient) {
+  var token = window.RKSHAN_API_TOKEN || localStorage.getItem("rkshan_api_token") || "";
+  var payload = {
+    schemaVersion: "1",
+    sourceSystem: "shop",
+    sourceEventId: "evt-" + Date.now() + "-" + Math.floor(Math.random() * 10000),
+    eventType: eventType,
+    recipient: {
+      externalRef: recipient.externalRef || recipient.email,
+      name: recipient.name || recipient.email.split("@")[0],
+      email: recipient.email,
+      language: recipient.language || "en"
+    }
+  };
+  var headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = "Bearer " + token;
+  return fetch("https://13-235-134-20.sslip.io/api/v1/consent/requests", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(payload)
+  }).then(function(res) {
+    return res.json().then(function(data) {
+      if (!res.ok) throw new Error(data.message || ("HTTP " + res.status));
+      return data;
+    });
+  });
+}
 function add(id,q){var c=cart(),i=c.filter(function(x){return x.id==id})[0];if(i)i.q+=q||1;else c.push({id:id,q:q||1});saveCart(c);var p=find(id);toast(p.name+" added to cart");track("add_to_cart",{item:p.name,value:p.price})}
 function stars(r){var f=Math.round(r);return"★★★★★".slice(0,f)+"☆☆☆☆☆".slice(0,5-f)+" <span class='mu'>"+r+"</span>"}
 function card(p){return'<div class="pc"><a href="product.html?id='+p.id+'"><div class="pimg" style="background:'+p.c+'">'+p.e+'</div></a><div class="pb">'+(p.old?'<span class="tag">SALE</span>':'')+'<h3><a href="product.html?id='+p.id+'">'+p.name+'</a></h3><div class="stars">'+stars(p.r)+'</div><div class="price">'+money(p.price)+(p.old?'<s>'+money(p.old)+'</s>':'')+'</div><button class="btn sm" onclick="add('+p.id+')">Add to cart</button></div></div>'}
@@ -20,7 +49,16 @@ var R={
  home:function(){
   $("#feat").innerHTML=PRODUCTS.slice(0,8).map(card).join("");
   $("#cats").innerHTML=CATS.map(function(c){return'<a class="cat" href="shop.html?cat='+c[0]+'"><b>'+c[1]+'</b>'+c[0]+'</a>'}).join("");
-  $("#newsf").onsubmit=function(e){e.preventDefault();Store.set("g3_newsletter",{email:$("#newse").value,at:Date.now()});toast("Subscribed (demo)");this.reset()};
+  $("#newsf").onsubmit=function(e){
+    e.preventDefault();
+    var email=$("#newse").value.trim();
+    if(!email)return;
+    Store.set("g3_newsletter",{email:email,at:Date.now()});
+    sendRkshanConsentRequest("newsletter.subscribed",{email:email})
+      .then(function(){toast("Subscribed! Consent request sent.");})
+      .catch(function(err){console.warn("Rkshan automation intake:",err.message);toast("Subscribed (demo)");});
+    this.reset();
+  };
  },
  shop:function(){
   var q=new URLSearchParams(location.search),cat=q.get("cat")||"",term=q.get("q")||"";
@@ -44,8 +82,17 @@ var R={
  checkout:function(){
   var c=cart();if(!c.length){location="cart.html";return}
   $("#osum").innerHTML=sum(c);
-  $("#cf").onsubmit=function(e){e.preventDefault();var id="G3-"+Math.floor(Math.random()*9e5+1e5),t=total(c);
-   Store.set("g3_last_order",{id:id,total:t,items:c.length});track("purchase",{order:id,value:t});saveCart([]);location="thank-you.html"};
+   $("#cf").onsubmit=function(e){
+    e.preventDefault();
+    var id="G3-"+Math.floor(Math.random()*9e5+1e5),t=total(c);
+    var em=($("#cf input[type=email]")||{}).value;
+    var nm=($("#cf input[required]")||{}).value;
+    Store.set("g3_last_order",{id:id,total:t,items:c.length});
+    track("purchase",{order:id,value:t});
+    if(em){sendRkshanConsentRequest("order.placed",{email:em,name:nm,externalRef:id}).catch(function(){});}
+    saveCart([]);
+    location="thank-you.html";
+   };
  },
  thanks:function(){var o=Store.get("g3_last_order",{});$("#oid").textContent=o.id||"G3-000000";$("#ot").textContent=o.total?money(o.total):""}
 };
