@@ -15,28 +15,18 @@ function track(ev,data){window.dataLayer=window.dataLayer||[];var o={event:ev};f
 
 /* Method B: Rkshan Event-Driven Consent Automation */
 function sendRkshanConsentRequest(eventType, recipient) {
-  var token = window.RKSHAN_API_TOKEN || localStorage.getItem("rkshan_api_token") || "";
-  var payload = {
-    schemaVersion: "1",
-    sourceSystem: "shop",
-    sourceEventId: "evt-" + Date.now() + "-" + Math.floor(Math.random() * 10000),
-    eventType: eventType,
-    recipient: {
-      externalRef: recipient.externalRef || recipient.email,
-      name: recipient.name || recipient.email.split("@")[0],
-      email: recipient.email,
-      language: recipient.language || "en"
-    }
-  };
-  var headers = { "Content-Type": "application/json" };
-  if (token) headers["Authorization"] = "Bearer " + token;
-  return fetch("https://13-235-134-20.sslip.io/api/v1/consent/requests", {
+  return fetch("/api/subscribe", {
     method: "POST",
-    headers: headers,
-    body: JSON.stringify(payload)
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      eventType: eventType,
+      email: recipient.email,
+      name: recipient.name,
+      externalRef: recipient.externalRef
+    })
   }).then(function(res) {
     return res.json().then(function(data) {
-      if (!res.ok) throw new Error(data.message || ("HTTP " + res.status));
+      if (!res.ok) throw new Error(data.error || data.message || ("HTTP " + res.status));
       return data;
     });
   });
