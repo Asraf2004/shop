@@ -51,3 +51,69 @@ footer.site a{display:block;color:#c7d2fe;padding:3px 0;font-size:14px}footer.si
 #toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:12px 18px;border-radius:10px;opacity:0;transform:translateY(10px);transition:.25s;z-index:99;pointer-events:none}#toast.on{opacity:1;transform:none}
 @media(max-width:900px){.grid,.cats,.perks{grid-template-columns:repeat(2,1fr)}.hero .wrap,.shop,.pd,.cartgrid,.g2{grid-template-columns:1fr}.fg{grid-template-columns:1fr 1fr}.burger{display:block}
 .nav{display:none;position:absolute;top:68px;left:0;right:0;background:#fff;flex-direction:column;padding:10px;border-bottom:1px solid var(--ln);margin:0}.open .nav{display:flex}.search{display:none}.hero .art{font-size:90px}}
+
+/* Rkshan Privacy Consent Block Styling */
+.form .rk-consent {
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 14px 16px !important;
+  margin: 16px 0 !important;
+  background: #f8fafc !important;
+}
+.form .rk-consent legend {
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #0f172a !important;
+  padding: 0 6px !important;
+}
+.form .rk-consent p.rk-notice {
+  font-size: 13.5px !important;
+  color: #475569 !important;
+  margin: 0 0 12px 0 !important;
+  line-height: 1.5 !important;
+}
+.form .rk-consent p.rk-notice a {
+  color: var(--p) !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+}
+.form .rk-purpose {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  margin: 8px 0 !important;
+}
+.form .rk-purpose input[type="checkbox"] {
+  width: 18px !important;
+  min-width: 18px !important;
+  max-width: 18px !important;
+  height: 18px !important;
+  margin: 2px 0 0 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  cursor: pointer !important;
+  accent-color: var(--p) !important;
+}
+.form .rk-purpose label {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  font-size: 14px !important;
+  color: #1f2937 !important;
+  line-height: 1.4 !important;
+  cursor: pointer !important;
+}
+.form .rk-desc {
+  display: block !important;
+  font-size: 12.5px !important;
+  color: #64748b !important;
+  margin-top: 2px !important;
+  font-weight: normal !important;
+}
+.form .rk-req {
+  font-size: 12px !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+  margin-left: 4px !important;
+}
+
